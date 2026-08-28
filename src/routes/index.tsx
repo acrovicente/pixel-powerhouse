@@ -1,24 +1,88 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { TrustStrip } from "@/components/site/TrustStrip";
+import { Services } from "@/components/site/Services";
+import { Portfolio } from "@/components/site/Portfolio";
+import { Pillars } from "@/components/site/Pillars";
+import { Devices } from "@/components/site/Devices";
+import { Benefits } from "@/components/site/Benefits";
+import { Process } from "@/components/site/Process";
+import { Consult } from "@/components/site/Consult";
+import { Testimonials } from "@/components/site/Testimonials";
+import { Faq, faqs } from "@/components/site/Faq";
+import { FinalCta } from "@/components/site/FinalCta";
+import { Footer } from "@/components/site/Footer";
+import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "Criação de Sites e Landing Pages de Alta Conversão";
+const description =
+  "Criação de sites profissionais e landing pages de alta conversão para clínicas, empresas, salões, restaurantes e profissionais. Projetos personalizados e responsivos.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: `${title} | Vertex Studio` },
+      { name: "description", content: description },
+      { property: "og:title", content: `${title} | Vertex Studio` },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Vertex Studio",
+          description,
+          serviceType: [
+            "Criação de sites",
+            "Criação de landing pages",
+            "Desenvolvimento de sites responsivos",
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="relative min-h-screen overflow-x-hidden">
+      <Header />
+      <main>
+        <Hero />
+        <TrustStrip />
+        <Services />
+        <Portfolio />
+        <Pillars />
+        <Devices />
+        <Benefits />
+        <Process />
+        <Consult />
+        <Testimonials />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+      <WhatsAppFab />
     </div>
   );
 }
